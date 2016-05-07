@@ -48,18 +48,7 @@ RewriteRule ^ index.php [QSA,L]";
 	}
 
 	private function deleteSelf() {
-	    if($this->rmdir_recursive(__DIR__.DIRECTORY_SEPARATOR)){
-	    	return true;
-	    }
-	}
-
-	private function rmdir_recursive($dir) {
-	    foreach(scandir($dir) as $file) {
-	        if ('.' === $file || '..' === $file) continue;
-	        if (is_dir("$dir/$file")) $this->rmdir_recursive("$dir/$file");
-	        else unlink("$dir/$file");
-	    }
-	    if(rmdir($dir)){
+	    if(unlink(__DIR__)){
 	    	return true;
 	    }
 	}
