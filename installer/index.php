@@ -2,10 +2,12 @@
 require(__DIR__."/installer.php");
 use AmitKhare\PHPInstaller\Installer;
 
-$installer = new Installer(__DIR__."..");
+$installer = new Installer(ROOT);
 if(isset($_POST['submit'])){
 	if($installer->setup($_POST)){
-		header("Location: /");
+    if(unlink(__DIR__."..".DIRECTORY_SEPARATOR."index.php")){
+      header("Location: /");
+    }
 		die;
 	} else {
 		echo "failed, please check you db settings";
@@ -89,7 +91,7 @@ if(isset($_POST['submit'])){
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="submit">Authenticate</label>
                   <div class="col-md-8">
-                    <button id="submit" name="submit" class="btn btn-success">Connect</button>
+                    <button id="submit" name="submit" class="btn btn-success">Setup Site</button>
                     <button id="checkConnection" name="checkConnection" class="btn btn-info">Test Connection</button>
                   </div>
                 </div>
