@@ -105,7 +105,7 @@ RewriteRule ^ index.php [QSA,L]";
 		if($this::testConnection($postData)){
 			if($this->unZipApp()){
 				if($this->setupDB($this->makeDBSettings($postData))){
-					$flag = $this->importMySQL(__DIR__.DIRECTORY_SEPARATOR."slimtest.sql");
+					$flag = true;
 				}
 			}
 		}
