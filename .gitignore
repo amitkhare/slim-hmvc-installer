@@ -3,3 +3,6 @@
 .phpintel/
 .DS_Store
 *.lock
+/app/
+/public/
+.htaccess
