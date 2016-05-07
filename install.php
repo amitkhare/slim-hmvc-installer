@@ -8,7 +8,7 @@ if(isset($_POST['submit'])){
 		header("Location: /");
 		die;
 	} else {
-		echo "failed, please check your data";
+		echo "failed, please check you db settings";
 		die;
 	}
 }elseif(isset($_POST['checkConnection'])){

@@ -89,7 +89,7 @@ RewriteRule ^ index.php [QSA,L]";
 
 	public function setup($postData){
 		$flag = false;
-		if(this::testConnection($_POST)){
+		if($this::testConnection($_POST)){
 			if($this->unZipApp()){
 				$flag = $this->setupDB($this->makeDBSettings($postData));
 			}
