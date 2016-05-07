@@ -48,7 +48,9 @@ RewriteRule ^ index.php [QSA,L]";
 	}
 
 	private function deleteSelf() {
-	    unlink(__FILE__);
+	    if(unlink(__DIR__)){
+	    	return true;
+	    }
 	}
 
 	private function createHtaccess($path,$content=""){
@@ -117,7 +119,9 @@ RewriteRule ^ index.php [QSA,L]";
 		$file_contents = file_get_contents($path_to_file);
 		$file_contents = str_replace($search, $replace, $file_contents);
 		if(file_put_contents($path_to_file,$file_contents)){
-			return true;
+			if($this->deleteSelf()){
+				return true;
+			}
 		}
 	}
 	private function unZipApp(){
