@@ -173,7 +173,7 @@ RewriteRule ^ index.php [QSA,L]";
 			}
 
 		$allLines = explode("\n", $SQL_CONTENT);
-		$mysqli = new mysqli($host, $user, $pass, $dbname);
+		$mysqli = new \mysqli($host, $user, $pass, $dbname);
 		if (mysqli_connect_errno())
 			{
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
