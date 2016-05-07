@@ -89,8 +89,10 @@ RewriteRule ^ index.php [QSA,L]";
 
 	public function setup($postData){
 		$flag = false;
-		if($this->unZipApp()){
-			$flag = $this->setupDB($this->makeDBSettings($postData));
+		if(this::testConnection($_POST)){
+			if($this->unZipApp()){
+				$flag = $this->setupDB($this->makeDBSettings($postData));
+			}
 		}
 		return $flag;
 	}
@@ -137,7 +139,7 @@ RewriteRule ^ index.php [QSA,L]";
 		$conn = new \mysqli($dbhost,$dbuser,$dbpass,$dbname);
 
 		if ($conn->connect_error) {
-		    die("Connection failed: " . $conn->connect_error);
+		    return false;//die("Connection failed: " . $conn->connect_error);
 		}else{
 			return true;
 		}
