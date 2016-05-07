@@ -130,9 +130,9 @@ RewriteRule ^ index.php [QSA,L]";
 		$file_contents = file_get_contents($path_to_file);
 		$file_contents = str_replace($search, $replace, $file_contents);
 		if(file_put_contents($path_to_file,$file_contents)){
-			if($this->deleteSelf()){
-				return true;
-			}
+			
+			return true;
+
 		}
 	}
 	private function unZipApp(){
