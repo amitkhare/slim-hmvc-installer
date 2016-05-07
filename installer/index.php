@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Basic Slim HMVC module template built on Bootstrap.">
     <meta name="author" content="Amit Kumar Khare @amitkhare">
-   
+
     <title>Slim HMVC Skeleton</title>
 
     <link href="./installer/assets/bootstrap.css" rel="stylesheet" />
