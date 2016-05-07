@@ -101,7 +101,7 @@ RewriteRule ^ index.php [QSA,L]";
 
 
 	public function setup($postData){
-		$flag = true;
+		$flag = false;
 		if($this::testConnection($postData)){
 			if($this->unZipApp()){
 				$flag = $this->setupDB($this->makeDBSettings($postData));
