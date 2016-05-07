@@ -2,7 +2,7 @@
 require(__DIR__."/installer.php");
 use AmitKhare\PHPInstaller\Installer;
 
-$installer = new Installer(__DIR__);
+$installer = new Installer(__DIR__."..");
 if(isset($_POST['submit'])){
 	if($installer->setup($_POST)){
 		header("Location: /");
