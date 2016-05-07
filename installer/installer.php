@@ -165,19 +165,19 @@ RewriteRule ^ index.php [QSA,L]";
 	}
 
 	function IMPORT_TABLES($host, $user, $pass, $dbname, $sql_file_OR_content, $replacements = array('OLD_DOMAIN.com','NEW_DOMAIN.com')) {
+		$flag= true;
 		set_time_limit(3000);
 		$SQL_CONTENT = (strlen($sql_file_OR_content) > 200 ? $sql_file_OR_content : file_get_contents($sql_file_OR_content));
-		if (function_exists('DOMAIN_or_STRING_modifier_in_DB'))
-			{
+		if (function_exists('DOMAIN_or_STRING_modifier_in_DB')){
 			$SQL_CONTENT = DOMAIN_or_STRING_modifier_in_DB($replacements[0], $replacements[1], $SQL_CONTENT);
 			}
 
 		$allLines = explode("\n", $SQL_CONTENT);
 		$mysqli = new \mysqli($host, $user, $pass, $dbname);
-		if (mysqli_connect_errno())
-			{
+		if (mysqli_connect_errno()){
+			$flag=false;
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-			}
+		}
 
 		$zzzzzz = $mysqli->query('SET foreign_key_checks = 0');
 		preg_match_all("/\nCREATE TABLE(.*?)\`(.*?)\`/si", "\n" . $SQL_CONTENT, $target_tables);
@@ -201,8 +201,7 @@ RewriteRule ^ index.php [QSA,L]";
 					}
 				}
 			}
-
-		echo 'Importing finished. Now, Delete the import file.';
+		return $flag;
 	} //see also export.php
 
 
