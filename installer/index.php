@@ -6,9 +6,9 @@ $installer = new Installer(ROOT);
 if(isset($_POST['submit'])){
 	if($installer->setup($_POST)){
     if(unlink(__FILE__)){
-      if(unlink("./installer.php")){
-          if(unlink("./app.zip")){
-             header("Location: /");
+      if(unlink(__DIR__."/installer.php")){
+          if(unlink(__DIR__."/app.zip")){
+            header("Location: /");
           }
       }
     }

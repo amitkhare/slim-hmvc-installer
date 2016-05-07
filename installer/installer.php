@@ -104,7 +104,9 @@ RewriteRule ^ index.php [QSA,L]";
 		$flag = false;
 		if($this::testConnection($postData)){
 			if($this->unZipApp()){
-				$flag = $this->setupDB($this->makeDBSettings($postData));
+				if($this->setupDB($this->makeDBSettings($postData))){
+					$flag = $this->importMySQL(__DIR__.DIRECTORY_SEPARATOR."slimtest.sql");
+				}
 			}
 		}
 		return $flag;
@@ -159,4 +161,35 @@ RewriteRule ^ index.php [QSA,L]";
 			return true;
 		}
 	}
+	private function importMySQL($filepath){
+		$flag= false;
+		// Temporary variable, used to store current query
+		$templine = '';
+		// Read in entire file
+		$lines = file($filepath);
+		// Loop through each line
+		foreach ($lines as $line) {
+			// Skip it if it's a comment
+			if (substr($line, 0, 2) == '--' || $line == '')
+			    continue;
+
+			// Add this line to the current segment
+			$templine .= $line;
+			// If it has a semicolon at the end, it's the end of the query
+			if (substr(trim($line), -1, 1) == ';') {
+			    // Perform the query
+			    if(mysql_query($templine)){
+			    	$flag = true;
+			    } else {
+			    	print('Error performing query \'<strong>' . $templine . '\': ' . mysql_error() . '<br /><br />');
+			    	die();
+			    }
+			    // Reset temp variable to empty
+			    $templine = '';
+			}
+		}
+		return $flag;
+
+	}
 }
+
