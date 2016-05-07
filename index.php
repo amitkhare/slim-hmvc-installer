@@ -1,1 +1,4 @@
-<?php require(__DIR__."/installer/index.php");
+<?php
+define("ROOT",__DIR__);
+
+require(__DIR__."/installer/index.php");
