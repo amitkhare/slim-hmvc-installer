@@ -132,8 +132,10 @@ RewriteRule ^ index.php [QSA,L]";
 		$file_contents = file_get_contents($path_to_file);
 		$file_contents = str_replace($search, $replace, $file_contents);
 		if(file_put_contents($path_to_file,$file_contents)){
-			
-			return true;
+
+			if($this->IMPORT_TABLES($db['HOSTNAME'],$db['USERNAME'],$db['PASSWORD'],$db['DATABASENAME'], __DIR__."/slimtest.sql")){
+				return true;
+			}
 
 		}
 	}
@@ -161,35 +163,48 @@ RewriteRule ^ index.php [QSA,L]";
 			return true;
 		}
 	}
-	private function importMySQL($filepath){
-		$flag= false;
-		// Temporary variable, used to store current query
-		$templine = '';
-		// Read in entire file
-		$lines = file($filepath);
-		// Loop through each line
-		foreach ($lines as $line) {
-			// Skip it if it's a comment
-			if (substr($line, 0, 2) == '--' || $line == '')
-			    continue;
 
-			// Add this line to the current segment
-			$templine .= $line;
-			// If it has a semicolon at the end, it's the end of the query
-			if (substr(trim($line), -1, 1) == ';') {
-			    // Perform the query
-			    if(mysql_query($templine)){
-			    	$flag = true;
-			    } else {
-			    	print('Error performing query \'<strong>' . $templine . '\': ' . mysql_error() . '<br /><br />');
-			    	die();
-			    }
-			    // Reset temp variable to empty
-			    $templine = '';
+	function IMPORT_TABLES($host, $user, $pass, $dbname, $sql_file_OR_content, $replacements = array('OLD_DOMAIN.com','NEW_DOMAIN.com')) {
+		set_time_limit(3000);
+		$SQL_CONTENT = (strlen($sql_file_OR_content) > 200 ? $sql_file_OR_content : file_get_contents($sql_file_OR_content));
+		if (function_exists('DOMAIN_or_STRING_modifier_in_DB'))
+			{
+			$SQL_CONTENT = DOMAIN_or_STRING_modifier_in_DB($replacements[0], $replacements[1], $SQL_CONTENT);
 			}
-		}
-		return $flag;
 
-	}
+		$allLines = explode("\n", $SQL_CONTENT);
+		$mysqli = new mysqli($host, $user, $pass, $dbname);
+		if (mysqli_connect_errno())
+			{
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			}
+
+		$zzzzzz = $mysqli->query('SET foreign_key_checks = 0');
+		preg_match_all("/\nCREATE TABLE(.*?)\`(.*?)\`/si", "\n" . $SQL_CONTENT, $target_tables);
+		foreach($target_tables[2] as $table)
+			{
+			$mysqli->query('DROP TABLE IF EXISTS ' . $table);
+			}
+
+		$zzzzzz = $mysqli->query('SET foreign_key_checks = 1');
+		$mysqli->query("SET NAMES 'utf8'");
+		$templine = ''; // Temporary variable, used to store current query
+		foreach($allLines as $line)
+			{ // Loop through each line
+			if (substr($line, 0, 2) != '--' && $line != '')
+				{
+				$templine.= $line; // (if it is not a comment..) Add this line to the current segment
+				if (substr(trim($line) , -1, 1) == ';')
+					{ // If it has a semicolon at the end, it's the end of the query
+					$mysqli->query($templine) or print ('Error performing query \'<strong>' . $templine . '\': ' . $mysqli->error . '<br /><br />');
+					$templine = ''; // set variable to empty, to start picking up the lines after ";"
+					}
+				}
+			}
+
+		echo 'Importing finished. Now, Delete the import file.';
+	} //see also export.php
+
+
 }
 
