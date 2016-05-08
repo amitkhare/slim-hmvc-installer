@@ -15,6 +15,8 @@ Via Git:
 
     composer update
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+> Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+
+> Point your virtual host document root to your new [my-app-name]'s root / directory. it will automatically redirect all calls to /public/index.php via .htaccess
 
 >> Open in Web Browser, follow onscreen instructions.
