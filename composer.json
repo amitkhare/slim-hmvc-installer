@@ -1,6 +1,19 @@
 {
+    "name": "amitkhare/slim-hmvc-installer",
+    "description": "A HMVC modular application for Slim Framework. Use this application to quickly setup and start working on a new Slim Framework 3 with HMVC capabilities.",
+    "keywords": ["microframework","hmvc","modular","router"],
+    "homepage": "http://github.com/amitkhare/slim-hmvc-installer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amit Kumar Khare",
+            "email": "me.amitkhare@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
     "require": {
-        "amitkhare/slim-hmvc": "^1.0",
-        "slim/slim": "^3.3"
+        "php": ">=5.5.0",
+        "slim/slim": "^3.1",
+        "amitkhare/slim-hmvc": "^1.0.0"
     }
 }

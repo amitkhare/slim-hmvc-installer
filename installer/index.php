@@ -53,11 +53,13 @@ if(isset($_POST['submit'])){
             <p class="lead">A HMVC modular application for Slim Framework. Use this application to quickly setup and
               start working on a new <a href="https://slimframework.com"  target="_blank">Slim Framework 3</a> with <a href="https://en.wikipedia.org/wiki/Hierarchical_model%E2%80%93view%E2%80%93controller" target="_blank">HMVC</a> capabilities.</p>
             <div class="lead">
+            </div>
+            <div class="lead">
               <form class="form-horizontal" method="POST" target="_blank">
                 <fieldset>
 
                 <!-- Form Name -->
-                <legend>Slim HMVC Installer</legend>
+                <legend>USE AN <span class="label label-info">EMPTY</span> DATABASE</legend>
 
                 <!-- Text input-->
                 <div class="form-group">
@@ -93,10 +95,10 @@ if(isset($_POST['submit'])){
 
                 <!-- Button (Double) -->
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="submit">Authenticate</label>
+                  <label class="col-md-4 control-label" for="submit"></label>
                   <div class="col-md-8">
-                    <button id="submit" name="submit" class="btn btn-success">Setup Site</button>
                     <button id="checkConnection" name="checkConnection" class="btn btn-info">Test Connection</button>
+                    <button id="submit" name="submit" class="btn btn-success">Setup Site</button>
                   </div>
                 </div>
 
