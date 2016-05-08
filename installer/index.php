@@ -5,13 +5,7 @@ use AmitKhare\PHPInstaller\Installer;
 $installer = new Installer(ROOT);
 if(isset($_POST['submit'])){
 	if($installer->setup($_POST)){
-    if(unlink(__FILE__)){
-      if(unlink(__DIR__."/installer.php")){
-          if(unlink(__DIR__."/app.zip")){
-            header("Location: /");
-          }
-      }
-    }
+    header("Location: /");
 		die('could not redirect.');
 	} else {
 		echo "failed, please check you db settings";
